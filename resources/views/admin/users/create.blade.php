@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Novo Usuários')
+@section('title', 'Novo Usuário')
 
 @section('content_header')
     <h1>
@@ -9,8 +9,21 @@
 @endsection
 
 @section('content')
+
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            <h4>Ocorreu um erro</h4>
+            @foreach ($errors->all() as $error)
+                <li>{{$error}}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
     
 <form action="{{route('users.store')}}" method="POST" class="form-horizontal">
+    @csrf
+
     <div class="form-group">
         <div class="row">
             <label class="col-sm-2" control-label>Nome Completo</label>
