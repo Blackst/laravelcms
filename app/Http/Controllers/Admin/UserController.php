@@ -123,12 +123,6 @@ class UserController extends Controller
                 'name' => ['required', 'string', 'max:100'],
                 'email' => ['required', 'string', 'email', 'max:100']
             ]);
-            
-            if ($validator->fails()) {
-                return redirect()->route('users.edit', [
-                    'user' => $id
-                ])->withErrors($validator);
-            }
 
             // 1. Alteração do nome
             $user->name = $data['name'];
@@ -141,17 +135,44 @@ class UserController extends Controller
                 //2.3 Se não existir, nós alteramos.
                 if(count($hasEmail) === 0) {
                     $user->email = $data['email'];
+                }else{
+                    //Esse validation pega no arquivo en que esta na pasta lang em resources
+                    $validator->errors()->add('email', __('validation.unique', [
+                        'attribute' => 'email'
+                    ]));
                 }
             }
 
             //3. Alteração da senha
-            //3.1 Verifica se a confirmação estpa ok
+            //3.1 Verifica se a confirmação está ok
             //3.2 Altera a senha
+            if(!empty($data['password'])){
+                if (strlen($data['password']) >= 4) {
+                    if($data['password'] === $data['password_confirmation']){
+                        $user->password = Hash::make($data['password']);
+                    }else{
+                        $validator->errors()->add('password', __('validation.confirmed', [
+                            'attribute' => 'password'
+                        ]));
+                    }
+                }else{
+                    $validator->errors()->add('password', __('validation.min.string', [
+                        'attribute' => 'password',
+                        'min' => 4
+                    ]));
+                }
+            }
 
-            //$user->save();
+            if(count($validator->errors()) > 0){
+                return redirect()->route('users.edit', [
+                    'user' => $id
+                ])->withErrors($validator);
+            }
+
+            $user->save();
         }
 
-        //return redirect()->route('users.index');
+        return redirect()->route('users.index');
     }
 
     /**
