@@ -106,7 +106,52 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        echo "Recebendo os dados";
+        $user = User::find($id);
+
+        if ($user) {
+            $data = $request->only([
+                'name',
+                'email',
+                'password',
+                'password_confirmation'
+            ]);
+
+            $validator = Validator::make([
+                'name' => $data['name'],
+                'email' => $data['email']
+            ], [
+                'name' => ['required', 'string', 'max:100'],
+                'email' => ['required', 'string', 'email', 'max:100']
+            ]);
+            
+            if ($validator->fails()) {
+                return redirect()->route('users.edit', [
+                    'user' => $id
+                ])->withErrors($validator);
+            }
+
+            // 1. Alteração do nome
+            $user->name = $data['name'];
+
+            //2. Alteração do e-mail
+            //2.1 Primeiro, verificamos se o email foi alterado
+            if ($user->email != $data['email']) {
+                //2.2 Verificamos se o novo email já existe
+                $hasEmail = User::where('email', $data['email'])->get();
+                //2.3 Se não existir, nós alteramos.
+                if(count($hasEmail) === 0) {
+                    $user->email = $data['email'];
+                }
+            }
+
+            //3. Alteração da senha
+            //3.1 Verifica se a confirmação estpa ok
+            //3.2 Altera a senha
+
+            //$user->save();
+        }
+
+        //return redirect()->route('users.index');
     }
 
     /**
