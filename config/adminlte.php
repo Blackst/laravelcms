@@ -192,12 +192,12 @@ return [
         ['header' => 'Configurações'],
         [
             'text' => 'Configurações do site',
-            'url'  => 'admin/setttings',
+            'url'  => 'painel/setttings',
             'icon' => 'fas fa-fw fa-file'
         ],
         [
             'text' => 'Meu Perfil',
-            'url'  => 'admin/profile',
+            'url'  => 'painel/profile',
             'icon' => 'fas fa-fw fa-user'
         ],
     ],
