@@ -192,7 +192,7 @@ return [
         ['header' => 'Configurações'],
         [
             'text' => 'Configurações do site',
-            'url'  => 'painel/setttings',
+            'url'  => 'painel/settings',
             'icon' => 'fas fa-fw fa-file'
         ],
         [
