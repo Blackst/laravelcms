@@ -40,9 +40,14 @@ class SettingController extends Controller
 
         //salvar
 
-        echo 'salvando';
+        foreach ($data as $item => $value) {
+            Setting::where('name', $item)->update([
+                'content' => $value
+            ]);
+        }
 
-        //return redirect()->route('settings');
+        return redirect()->route('settings')
+        ->with('warning', 'Informações alteradas com sucesso!');
     }
 
     protected function validator($data){
