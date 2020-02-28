@@ -12,7 +12,7 @@
             <div class="small-box bg-info">
                 <div class="inner">
                     <h3>{{$visitsCount}}</h3>
-                    <p>Visitantes</p>
+                    <p>Visitas</p>
                 </div>
                 <div class="icon">
                     <i class="far fa-fw fa-eye"></i>
