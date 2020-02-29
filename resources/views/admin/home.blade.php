@@ -29,7 +29,7 @@
                     <p>Usuários online</p>
                 </div>
                 <div class="icon">
-                    <i class="far fa-fw fa-heart"></i>
+                    <i class="fa fa-fw fa-heart"></i>
                 </div>
             </div>
         </div>
