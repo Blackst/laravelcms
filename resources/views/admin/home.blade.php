@@ -5,7 +5,26 @@
 @section('title', 'Painel')
 
 @section('content_header')
-    <h1>Dashboard</h1>
+    <div class="row">
+        <div class="col-md-6">
+            <h1>Dashboard</h1>
+
+            @if ($acessos > 30)
+                <b>O período selecionado foi de :</b> {{$acessos}} dias.
+            @endif
+        </div>
+        <div class="col-md-6">
+        <form action="{{route('admin')}}" method="GET">
+                <input type="submit" value="Ok" class="float-md-right btn btn-info">
+                <select name="periodo" id="pdo" class="float-md-right" style="margin-right: 10px; border-radius: 5px; height: 38px;">
+                    <option value="30">Últimos 30 dias</option>
+                    <option value="60">Últimos 60 dias</option>
+                    <option value="90">Últimos 90 dias</option>
+                    <option value="120">Últimos 120 dias</option>
+                </select>
+           </form>
+        </div>
+    </div>
 @endsection
 
 @section('content')
